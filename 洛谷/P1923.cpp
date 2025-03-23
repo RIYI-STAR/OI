@@ -19,11 +19,12 @@ void quickSort(int* a, int left, int right) {
     quickSort(a, firstMax+1, right);
 }
 
-int main() {
+int main() { 
     int n, k;
     cin >> n >> k;
     int a[n];
     for (int i = 0; i < n; i++) cin >> a[i];
     quickSort(a, 0, n-1);
     cout << a[n-1-k] << endl;
+    return 0;
 }
