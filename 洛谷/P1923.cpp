@@ -1,30 +1,31 @@
 // P1923 【深基9.例4】求第 k 小的数
 
 #include <iostream>
+#include <map>
 using namespace std;
 
-void quickSort(int* a, int left, int right) {
-    if (left >= right) return;
-    int firstMin = left+1;
-    int firstMax = right;
-    while(firstMin < firstMax) {
-        while(a[firstMax] <= a[left]) 
-            firstMax--;
-        while(a[firstMin] >= a[left]) 
-            firstMin++;
-        swap(a[firstMax], a[firstMin]);
-    }
-    swap(a[left], a[firstMax]);
-    quickSort(a, left, firstMax-1);
-    quickSort(a, firstMax+1, right);
-}
+typedef long long ll;
 
-int main() { 
+int main()
+{
     int n, k;
     cin >> n >> k;
-    int a[n];
-    for (int i = 0; i < n; i++) cin >> a[i];
-    quickSort(a, 0, n-1);
-    cout << a[n-1-k] << endl;
+    map<ll, ll> mp;
+    for (int i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        mp[x]++;
+    }
+
+    for (auto pair : mp)
+    {
+        if (k <= 0)
+        {
+            cout << pair.first;
+            break;
+        }
+        k -= pair.second;
+    }
     return 0;
 }
