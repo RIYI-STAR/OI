@@ -4,37 +4,71 @@
 #include <unordered_map>
 using namespace std;
 
-class Solution {
-    public:
-        static int hash(string s)
-        {
-            int res = 0;
-            for (char c : s)
-                res += c - 'a' + 1;
-            return res;
-        }
+class Solution
+{
+public:
+    static const int NN = 10000007;
 
-        vector<vector<string>> groupAnagrams(vector<string>& strs) {
-            unordered_map<int, vector<string>> mp;
-            for (string& s : strs){
-                int ss = hash(s);
-                mp[ss].push_back(s);
-            }
-            vector<vector<string>> r;
-            for (auto& p : mp)
-                r.push_back(p.second);
-            return r;
-        }
+    struct Node
+    {
+        string s;
+        unsigned long long int length;
+        int hash;
     };
 
-// int main() {
-//     Solution s;
-//     vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
-//     vector<vector<string>> res = s.groupAnagrams(strs);
-//     for (auto& v : res) {
-//         for (auto& s : v)
-//             cout << s << " ";
-//         cout << endl;
-//     }
-//     return 0;
-// }
+    static int hash(string s)
+    {
+        long long int res = 1;
+        for (char c : s)
+
+            if (c != ' ')
+                res = res * c % NN;
+
+        // cout << res << endl;
+        return res;
+    }
+
+    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    {
+        vector<vector<Node>> mp(NN);
+        for (string &s : strs)
+        {
+            int h = hash(s);
+            Node ss = {s, s.length(), h};
+            if (mp[h].empty())
+                mp[h].push_back(ss);
+            else if(mp[h][0].length == s.length())
+                mp[h].push_back(ss);
+            else for (int i = h + 1; i < NN; i*=2)
+                if (mp[i].empty())
+                {
+                    mp[i].push_back(ss);
+                    break;
+                }
+        }
+        vector<vector<string>> r;
+        for (auto &p : mp)
+            if (!p.empty())
+            {
+                vector<string> v;
+                for (auto &n : p)
+                    v.push_back(n.s);
+                r.push_back(v);
+            }
+        return r;
+    }
+};
+
+int main()
+{
+    Solution s;
+    vector<string> strs = {"aaaaaaaaaaabc","abcd"};
+    vector<vector<string>> res = s.groupAnagrams(strs);
+    for (auto &v : res)
+    {
+        for (auto &s : v)
+            cout << s << " ";
+        cout << endl;
+    }
+    return 0;
+}
