@@ -8,29 +8,54 @@ using namespace std;
 class Solution
 {
 public:
+    static const int NN = 10000007;
+
+    struct Node
+    {
+        string s;
+        unsigned long long int length;
+        int hash;
+    };
 
     static int hash(string s)
     {
-        long long int res = 0;
+        long long int res = 1;
         for (char c : s)
-            res = (res * 31 + c) % 1000007;
+
+            if (c != ' ')
+                res = res * c % NN;
+
+        // cout << res << endl;
         return res;
     }
 
     vector<vector<string>> groupAnagrams(vector<string> &strs)
     {
-        vector<vector<string>> res(1000007);
+        vector<vector<Node>> mp(NN);
         for (string &s : strs)
         {
-            string ss = s;
-            sort(ss.begin(), ss.end());
-            int h = hash(ss);
-            res[h].push_back(s);
+            int h = hash(s);
+            Node ss = {s, s.length(), h};
+            if (mp[h].empty())
+                mp[h].push_back(ss);
+            else if(mp[h][0].length == s.length())
+                mp[h].push_back(ss);
+            else for (int i = h + 1; i < NN; i*=2)
+                if (mp[i].empty())
+                {
+                    mp[i].push_back(ss);
+                    break;
+                }
         }
         vector<vector<string>> r;
-        for (auto &v : res)
-            if (!v.empty())
+        for (auto &p : mp)
+            if (!p.empty())
+            {
+                vector<string> v;
+                for (auto &n : p)
+                    v.push_back(n.s);
                 r.push_back(v);
+            }
         return r;
     }
 };
@@ -38,7 +63,7 @@ public:
 int main()
 {
     Solution s;
-    vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat", "ab", "c"};
+    vector<string> strs = {"aaaaaaaaaaabc","abcd"};
     vector<vector<string>> res = s.groupAnagrams(strs);
     for (auto &v : res)
     {
