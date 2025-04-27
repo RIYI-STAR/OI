@@ -19,7 +19,7 @@ int sum(string n)
         for (int i = 0; i < n.size(); i++)
             n[i] = (n[i] == '1') ? '0' : '1';
 
-        cout << n << endl;
+        // cout << n << endl;
         n[n.size() - 1]++;
         for (int i = n.size() - 1; i > 0; i--)
         {
