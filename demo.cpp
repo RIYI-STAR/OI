@@ -1,9 +1,14 @@
 #include <iostream>
 using namespace std;
 
+void func()
+{
+    int *a = new int[100000000];
+    func();
+}
+
 int main()
 {
-    int a = 1;
-    int b =2;
-    cout << (a++, ++a, a+++ ++a) << endl;
+    func();
+    return 0;
 }

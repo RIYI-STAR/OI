@@ -4,13 +4,14 @@ using namespace std;
 
 int main()
 {
-    string n;
+    int n;
     while (cin >> n)
     {
         int res = 0;
-        for (char c : n)
-            res = (res + c - '0') % 9;
-        cout << res << endl;
+        for(int i = 1;i < n;i++)
+            if (n%i == 0) res += i;
+        cout << ((n == res) ? "Yes" : "No") << endl;
+        
     }
     return 0;
 }
