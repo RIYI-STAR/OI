@@ -1,39 +1,29 @@
 #include <iostream>
-#include <cmath>
+#include <vector>
 using namespace std;
 
-
-int main(){
-	int m;
-	while(cin>>m){
-		int arr[m];
-		int ar[m];
-		for(int i=0;i<m;i++){
-			ar[i]=-99999;
+int main()
+{
+	int a, b;
+	vector<int> dt_x = {-1,1,2,2,1,-1,-2,-2};
+	vector<int> dt_y = {-2,-2,-1,1,2,2,1,-1};
+	while (cin >> a >> b)
+	{
+		vector<int> x(8);
+		vector<int> y(8);
+		for(int i = 0;i<8;i++)
+		{
+			x[i] = a + dt_x[i];
+			y[i] = b + dt_y[i];
 		}
-		for(int i=0;i<m;i++)cin>>arr[i];
-		
-		int t=0;
-		
-		for(int i=0;i<m;i++){
-			int temp = 0;
-			for(int j=0;j<m;j++)if(arr[i]!=ar[j])temp++;
-			if(temp==m){
-				ar[t]=arr[i];
-				t++;
-			}
+		for (int i = 0; i < 8; i++)
+		{
+			if (x[i] >= 0 && x[i] <= 7 && y[i] >= 0 && y[i] <= 7)
+				cout << "(" << x[i] << ',' << y[i] << ")";
+			else cout << "No";
+			if (i < 7) cout << "|";
 		}
-		
-		
-		cout << '{';
-		
-	
-		for(int i=0;i<t;i++){
-			cout << ar[i];
-			if(i<t-1)cout << ',';
-		}
-		
-		
-		cout << '}' << endl;
+		cout << endl;
 	}
+	return 0;
 }
