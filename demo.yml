@@ -1,0 +1,82 @@
+# 控制面板模板文件
+# 命令解析值：
+#    [player] - [player]将在命令中替换为用户名，
+#               例如 'give [player] diamond' 会变成 '/give BONNe1704 diamond'
+#    [server] - 命令将由控制台执行， 例如 '[server] op [player]' 会变成 '/op BONNe1704'
+#    [label]  - [label]将在命令中替换为对应的游戏模式用户命令，
+#               例如 '[label] challenges' 在BSkyblock中会变成 'island challenges'
+# material 使用来自 Material.match
+# permission 是将被添加到"[gamemode].controlpanel.panel.[suffix]"末尾的后缀。
+#    添加权限意味着用户将打开权限定义的控制面板。
+#    如果用户有多个面板权限，它将打开第一个遇到的默认面板。
+#    如果用户有 '*' 权限，将打开第一个定义的面板作为默认面板。
+# description 可以包含颜色代码（使用&符号）和换行符（使用|）以及以%开头和结尾的占位符。
+#    [gamemode]中的占位符将被转换为正确的字符串。
+
+panel-list:
+  default:
+    defaultPanel: true
+    panelName: '&1岛屿面板'
+    permission: 'default'
+    buttons:
+      0:
+        name: '岛屿'
+        material: GRASS_BLOCK
+        description:
+          - '&1前往 &5你的岛屿'
+        command: '[label]'
+      8:
+        name: '设置'
+        material: LAVA_BUCKET
+        description:
+          - '打开你的岛屿设置'
+        command: '[label] settings'
+      1:
+        name: '团队'
+        material: SKULL_ITEM
+        description:
+          - '查看团队成员'
+        command: '[label] team'
+      3:
+        name: '设置家'
+        material: WHITE_BED
+        description:
+          - '设置你的家'
+        command: '[label] sethome'
+      9:
+        name: '计算等级'
+        material: ACACIA_STAIRS
+        description:
+          - '岛屿等级'
+          - '%Level_bskyblock_island_level%'
+        command: '[label] level'
+      10:
+        name: '显示前10名'
+        material: BOOK
+        description:
+          - '列出前10名岛屿'
+        command: '[label] top'
+      4:
+        name: '回家'
+        material: QUARTZ_BLOCK
+        description:
+          - '回到你设置的家'
+        command: 'home'
+      12:
+        name: '挑战'
+        material: ENCHANTING_TABLE
+        description:
+          - '挑战任务'
+        command: '[label] challenges'
+      13:
+        name: '参观'
+        material: PAPER
+        description:
+          - '参观其他空岛'
+        command: 'visitmenu'
+      17:
+        name: '参观设置'
+        material: SPECTRAL_ARROW
+        description:
+          - '设置我的空岛参观权限'
+        command: 'is visit configure'
